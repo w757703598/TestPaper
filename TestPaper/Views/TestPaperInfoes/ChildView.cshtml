@@ -1,0 +1,342 @@
+﻿@model TestPaper.Models.TestPaperInfo
+<button onclick="exportPaperinfo(); return false;">导出试卷</button>
+<button onclick="printdata(); return false;">打印表格</button>
+@using (Html.BeginForm("ExportWord", "TestPaperInfoes", FormMethod.Post))
+{
+    <input type="hidden" value="124" id="cc" name="html"/>
+    <input type="submit" value="导出试卷" style="display:none" id="export" />
+}
+<div id="dataprint">
+    <div>
+        @*<h4>TestPaperInfo</h4>*@
+        <hr />
+        <dl class="dl-horizontal ">
+            <dt style="font-size:15px " class="col-sm-2 pull-left">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+        </dl>
+    </div>
+    <HR style="BORDER-RIGHT: #00686b 1px dotted; BORDER-TOP: #00686b 1px dotted; BORDER-LEFT: #00686b 1px dotted; BORDER-BOTTOM: #00686b 1px dotted" noShade SIZE=1>
+    <form id="TestPaper">
+        <h3>选择题</h3>
+        <table class="table"  style="TABLE-LAYOUT: fixed">
+
+            <tr>
+                <th width="50px">
+                    题号
+                </th>
+                <th>
+                    题目
+                </th>
+                <th>
+                    选项
+                </th>
+
+                @*<th>
+                    答案
+                </th>*@
+                <th>
+                    分数
+                </th>
+                <th></th>
+            </tr>
+            @{
+                var id = 0;
+                foreach (var item in Model.ChoiceQuestions)
+                {
+                    id++;
+                <tr>
+                    <td >
+                        @id
+                    </td>
+                    <td word-wrap：break-word word-break:break-all>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td word-wrap：break-word word-break:break-all>
+                        @Html.DisplayFor(modelItem => item.Options)
+                    </td>
+                    @*<td word-wrap：break-word word-break:break-all>
+                        @Html.DisplayFor(modelItem => item.Answer)
+                    </td>*@
+                    <td word-wrap：break-word word-break:break-all>
+                        @Html.DisplayFor(modelItem => item.Score)
+                    </td>
+                </tr>
+                    }
+                }
+        </table>
+        <HR style="BORDER-RIGHT: #00686b 1px dotted; BORDER-TOP: #00686b 1px dotted; BORDER-LEFT: #00686b 1px dotted; BORDER-BOTTOM: #00686b 1px dotted" noShade SIZE=1>
+        <h3>填空题</h3>
+        <table class="table"  style="TABLE-LAYOUT: fixed">
+
+            <tr>
+                <th width="50px">
+                    题号
+                </th>
+                <th>
+                    题目
+                </th>
+                @*<th>
+                        Options
+                    </th>*@
+                @*<th>
+                    答案
+                </th>*@
+                <th>
+                    分数
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.FillQuestions)
+            {
+                id++;
+                <tr>
+                    <td>
+                        @id
+                    </td>
+                    <td word-wrap：break-word word-break:break-all>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Options)
+                        </td>*@
+                    @*<td word-wrap：break-word word-break:break-all>
+                        @Html.DisplayFor(modelItem => item.Answer)
+                    </td>*@
+                    <td word-wrap：break-word word-break:break-all>
+                        @Html.DisplayFor(modelItem => item.Score)
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <HR style="BORDER-RIGHT: #00686b 1px dotted; BORDER-TOP: #00686b 1px dotted; BORDER-LEFT: #00686b 1px dotted; BORDER-BOTTOM: #00686b 1px dotted" noShade SIZE=1>
+        <h3>判断题</h3>
+        <table class="table"  style="TABLE-LAYOUT: fixed">
+            <tr>
+                <th width="50px">
+                    题号
+                </th>
+                <th>
+                    题目
+                </th>
+                @*<th>
+                        Options
+                    </th>
+                <th>
+                    答案
+                </th>*@
+                <th>
+                    分数
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.CheckQuestions)
+            {
+
+                id++;
+                <tr>
+                    <td>
+                        @id
+                    </td>
+                    <td word-wrap：break-word word-break:break-all>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Options)
+                        </td>*@
+                    @*<td word-wrap：break-word word-break:break-all>
+                        @Html.DisplayFor(modelItem => item.Answer)
+                    </td>*@
+                    <td word-wrap：break-word word-break:break-all>
+                        @Html.DisplayFor(modelItem => item.Score)
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <HR style="BORDER-RIGHT: #00686b 1px dotted; BORDER-TOP: #00686b 1px dotted; BORDER-LEFT: #00686b 1px dotted; BORDER-BOTTOM: #00686b 1px dotted" noShade SIZE=1>
+        <h3>计算题</h3>
+        <table class="table"  style="TABLE-LAYOUT: fixed">
+
+            <tr>
+                <th width="50px">
+                    题号
+                </th>
+                <th>
+                    题目
+                </th>
+                @*<th>
+                    答案
+                </th>*@
+                <th>
+                    分数
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.CalculateQuestions)
+            {
+                id++;
+                <tr>
+                    <td>
+                        @id
+                    </td>
+                    <td word-wrap：break-word word-break:break-all>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    @*<td word-wrap：break-word word-break:break-all>
+                            @Html.DisplayFor(modelItem => item.Answer)
+                        </td>*@
+                    <td word-wrap：break-word word-break:break-all>
+                        @Html.DisplayFor(modelItem => item.Score)
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <HR style="BORDER-RIGHT: #00686b 1px dotted; BORDER-TOP: #00686b 1px dotted; BORDER-LEFT: #00686b 1px dotted; BORDER-BOTTOM: #00686b 1px dotted" noShade SIZE=1>
+        <h2 ><strong>答案</strong></h2>
+        <h3>选择题</h3>
+        <table class="table" style="TABLE-LAYOUT: fixed">
+
+            <tr>
+                <th width="50px">
+                    题号
+                </th>
+                <th>
+                    答案
+                </th>
+                <th></th>
+            </tr>
+            @{
+                var id1 = 0;
+                foreach (var item in Model.ChoiceQuestions)
+                {
+                    id1++;
+                    <tr>
+                        <td>
+                            @id1
+                        </td>
+
+                        <td word-wrap：break-word word-break:break-all>
+                            @Html.DisplayFor(modelItem => item.Answer)
+                        </td>
+
+                    </tr>
+                }
+            }
+        </table>
+        <HR style="BORDER-RIGHT: #00686b 1px dotted; BORDER-TOP: #00686b 1px dotted; BORDER-LEFT: #00686b 1px dotted; BORDER-BOTTOM: #00686b 1px dotted" noShade SIZE=1>
+        <h3>判断题</h3>
+        <table class="table" style="TABLE-LAYOUT: fixed">
+
+            <tr>
+                <th width="50px">
+                    题号
+                </th>
+                <th>
+                    答案
+                </th>
+                <th></th>
+            </tr>
+            @{
+                foreach (var item in Model.CheckQuestions)
+                {
+                    id1++;
+                    <tr>
+                        <td>
+                            @id1
+                        </td>
+
+                        <td word-wrap：break-word word-break:break-all>
+                            @Html.DisplayFor(modelItem => item.Answer)
+                        </td>
+
+                    </tr>
+                }
+            }
+        </table>
+        <HR style="BORDER-RIGHT: #00686b 1px dotted; BORDER-TOP: #00686b 1px dotted; BORDER-LEFT: #00686b 1px dotted; BORDER-BOTTOM: #00686b 1px dotted" noShade SIZE=1>
+        <h3>填空题</h3>
+        <table class="table" style="TABLE-LAYOUT: fixed">
+
+            <tr>
+                <th width="50px">
+                    题号
+                </th>
+                <th>
+                    答案
+                </th>
+                <th></th>
+            </tr>
+            @{
+                foreach (var item in Model.FillQuestions)
+                {
+                    id1++;
+                    <tr>
+                        <td>
+                            @id1
+                        </td>
+
+                        <td word-wrap：break-word word-break:break-all>
+                            @Html.DisplayFor(modelItem => item.Answer)
+                        </td>
+
+                    </tr>
+                }
+            }
+        </table>
+        <HR style="BORDER-RIGHT: #00686b 1px dotted; BORDER-TOP: #00686b 1px dotted; BORDER-LEFT: #00686b 1px dotted; BORDER-BOTTOM: #00686b 1px dotted" noShade SIZE=1>
+        <h3>计算题</h3>
+        <table class="table" style="TABLE-LAYOUT: fixed">
+
+            <tr>
+                <th width="50px">
+                    题号
+                </th>
+                <th>
+                    答案
+                </th>
+                <th></th>
+            </tr>
+            @{
+                foreach (var item in Model.CalculateQuestions)
+                {
+                    id1++;
+                    <tr>
+                        <td>
+                            @id1
+                        </td>
+
+                        <td word-wrap：break-word word-break:break-all>
+                            @Html.DisplayFor(modelItem => item.Answer)
+                        </td>
+
+                    </tr>
+                }
+            }
+        </table>
+        <HR style="BORDER-RIGHT: #00686b 1px dotted; BORDER-TOP: #00686b 1px dotted; BORDER-LEFT: #00686b 1px dotted; BORDER-BOTTOM: #00686b 1px dotted" noShade SIZE=1>
+    </form>
+</div>
+@Scripts.Render("~/bundles/jquery")
+<script>
+
+    function printdata() {
+        var olddata = document.body.innerHTML;
+        var pritdata = document.getElementById("dataprint").innerHTML;
+        window.document.body.innerHTML = pritdata;
+        window.print();
+        window.document.body.innerHTML = olddata;
+    }
+    function exportPaperinfo() {
+        var pritdata = document.getElementById("dataprint").innerHTML;
+        $("#cc").val(pritdata);
+        $("#export").click();
+    }
+</script>

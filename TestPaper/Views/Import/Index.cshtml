@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{   
+   <script type="text/javascript">
+    $('input[id=fileUpload').change(function () {
+        $('#txt_Path').val($(this).val());
+        $('#form-Upload').submit();
+    });
+</script>
+} 
+    
+
+
+
+<h1>Select the Excel File</h1>
+<div class="input-group">
+    <input id="txt_Path" type="text" class="form-control" />
+    <span id="btn_Browse" style="cursor:pointer ;" onclick="$('input[id=fileUpload]').click();" class="input-group-addon">
+        <i class="glyphicon glyphicon-floppy-open "></i>&nbsp;&nbsp; &nbsp;浏览文件
+    </span>
+</div>
+
+@using(Html.BeginForm("ImportFile","Import",FormMethod.Post,new { enctype = "multipart/form-data", id = "form-Upload" }))
+{
+    @Html.AntiForgeryToken()
+    <input id="fileUpload" type="file" name="file" style="display:none" />
+}
+
+@*//上传提交*@
+<div class="input-group pull-right " style="margin:0 0 5px 0">
+    @Html.RouteLink("开始提交",new { action="Upload"},new { id = "submit", @class = "btn btn-primary ladda-button", data_style = "expand-right" })
+</div>
+
+<table class="table table-striped table-hover table-bordered ">
+
+
+
+</table>
+

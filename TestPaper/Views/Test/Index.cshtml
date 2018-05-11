@@ -1,0 +1,90 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    @Styles.Render("~/Content/css")
+    <style>
+        div div div {
+            border: solid 1px gray;
+            margin-top: 3px;
+            background: #cccccc;
+            text-align: center;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width" />
+    <title>Test</title>
+</head>
+<body style="padding:0">
+    @{ 
+        SelectListItem item;
+        List<SelectListItem> list = new List<SelectListItem>();
+        for (int i = 1; i < 5; i++)
+        {
+            item = new SelectListItem();
+            item.Text = "Text" + i;
+            item.Value = "Value" + i;
+            item.Selected = (i == 2);
+            list.Add(item);
+        }
+    }
+    @Html.DropDownList("ID", list);
+    @Html.TextBox("tbName", "wql", new { @class = "classText", @style = "width:200px" })
+    <div id="width">
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1">.col-md-1</div>
+            <div class="col-md-1">.col-md-1</div>
+            <div class="col-md-1">.col-md-1</div>
+            <div class="col-md-1">.col-md-1</div>
+            <div class="col-md-1">.col-md-1</div>
+            <div class="col-md-1">.col-md-1</div>
+            <div class="col-md-1">.col-md-1</div>
+            <div class="col-md-1">.col-md-1</div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">.col-md-3</div>
+            <div class="col-md-3">.col-md-3</div>
+            <div class="col-md-3">.col-md-3</div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-6">.col-md-6</div>
+            <div class="col-md-6">.col-md-6</div>
+            <div class="col-md-6">.col-md-6</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">.col=md-12</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6"></div>
+            <div class="col-sm-6"></div>
+        </div>
+    </div>
+    @using (Html.BeginForm("actioname", "controllername", FormMethod.Get))
+    {
+        @Html.TextBox("tbName")
+        <input type="submit" value="submitButton" />
+    }
+    @{ 
+        Html.BeginForm("actionname", "controllername", FormMethod.Post); }
+    @Html.TextBox("tbname")
+     <input type="submit" value="submitbutton"/>
+    @{Html.EndForm();}       
+
+    @Scripts.Render("~/bundles/jquery")
+    <script>
+        function setWidth() {
+            $("#width").text("Window width:" + document.body.clientWidth);
+        }
+        setInterval("setWidth()", 100);
+       </script>
+</body>
+</html>
+
+
+

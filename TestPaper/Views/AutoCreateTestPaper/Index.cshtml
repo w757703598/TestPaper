@@ -1,0 +1,188 @@
+﻿@model TestPaper.Models.QuestionInfo
+
+
+
+
+ @using (Html.BeginForm("AutoCreate","AutoCreateTestPaper",FormMethod.Post))
+   {
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Label("学科", htmlAttributes: new { @class = "control-label col-sd-2 " })
+            @{
+                var temp1 = new[] { new SelectListItem() { Text = "语文" }, new SelectListItem() { Text = "数学" }, new SelectListItem() { Text = "物理" }, new SelectListItem() { Text = "化学" } };
+                SelectList sele1 = new SelectList(temp1, "Text", "Text", ViewData["Subject"]);
+            }
+            @Html.DropDownList("Subject", sele1, new { @class = "form-control" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("难易程度", htmlAttributes: new { @class = "control-label col-sd-2 " })
+            @{
+                var temp2 = new[] {  new SelectListItem() { Text = "难" }, new SelectListItem() { Text = "中" }, new SelectListItem() { Text = "易" } };
+                SelectList sele2 = new SelectList(temp2, "Text", "Text", ViewData["diffcult"]);
+            }
+            @Html.DropDownList("diffcult", sele2, new { @class = "form-control" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("题目数量", htmlAttributes: new { @class = "control-label col-sd-2 " })
+            @Html.TextBox("questionNum", "", new { @class = "form-control" })
+        </div>
+        <div class="col-md-2  row  " style="margin-top:25px">
+            <input type="submit" value="自动生成" class="btn btn-default" />
+        </div>
+    </div>
+
+
+
+}
+
+
+
+
+<h3>选择题</h3>
+<table class="table">
+
+    <tr>
+        <th>
+            题目
+        </th>
+        <th>
+            选项
+        </th>
+        <th>
+            答案
+        </th>
+        <th>
+            分数
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.ChoiceQuestions)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Options)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Answer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Score)
+            </td>
+        </tr>
+    }
+
+</table>
+<HR style="BORDER-RIGHT: #00686b 1px dotted; BORDER-TOP: #00686b 1px dotted; BORDER-LEFT: #00686b 1px dotted; BORDER-BOTTOM: #00686b 1px dotted" noShade SIZE=1>
+<h3>填空题</h3>
+<table class="table">
+
+    <tr>
+        <th>
+            题目
+        </th>
+        @*<th>
+                Options
+            </th>*@
+        <th>
+            答案
+        </th>
+        <th>
+            分数
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.FillQuestions)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Options)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Answer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Score)
+            </td>
+        </tr>
+    }
+
+</table>
+<HR style="BORDER-RIGHT: #00686b 1px dotted; BORDER-TOP: #00686b 1px dotted; BORDER-LEFT: #00686b 1px dotted; BORDER-BOTTOM: #00686b 1px dotted" noShade SIZE=1>
+<h3>判断题</h3>
+<table class="table">
+    <tr>
+        <th>
+            题目
+        </th>
+        @*<th>
+                Options
+            </th>*@
+        <th>
+            答案
+        </th>
+        <th>
+            分数
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.CheckQuestions)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Options)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Answer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Score)
+            </td>
+        </tr>
+    }
+
+</table>
+<HR style="BORDER-RIGHT: #00686b 1px dotted; BORDER-TOP: #00686b 1px dotted; BORDER-LEFT: #00686b 1px dotted; BORDER-BOTTOM: #00686b 1px dotted" noShade SIZE=1>
+<h3>计算题</h3>
+<table class="table">
+
+    <tr>
+        <th>
+            题目
+        </th>
+        <th>
+            答案
+        </th>
+        <th>
+            分数
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.CalculateQuestions)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Answer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Score)
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="container col-md-offset-2 col-md-10">
+    @Html.ActionLink("返回试卷列表", "Index")
+</div>

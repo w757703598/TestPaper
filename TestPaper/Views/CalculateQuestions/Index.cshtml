@@ -1,0 +1,64 @@
+﻿@model IEnumerable<TestPaper.Models.CalculateQuestion>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>计算题</h2>
+
+<p>
+    @Html.ActionLink("创建新题", "Create")
+</p>
+<table class="table" style="TABLE-LAYOUT: fixed">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Answer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Score)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subject)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Section)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Difficulty)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr >
+        <td word-wrap：break-word word-break:break-all >
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td word-wrap：break-word word-break:break-all>
+            @Html.DisplayFor(modelItem => item.Answer)
+        </td>
+        <td word-wrap：break-word word-break:break-all>
+            @Html.DisplayFor(modelItem => item.Score)
+        </td>
+        <td word-wrap：break-word word-break:break-all>
+            @Html.DisplayFor(modelItem => item.Subject)
+        </td>
+        <td word-wrap：break-word word-break:break-all >
+            @Html.DisplayFor(modelItem => item.Section)
+        </td>
+        <td word-wrap：break-word word-break:break-all valign="middle">
+            @Html.DisplayFor(modelItem => item.Difficulty)
+        </td>
+        <td valign="middle">
+            @Html.ActionLink("编辑", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("详情", "Details", new { id=item.Id }) |
+            @Html.ActionLink("删除", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,78 @@
+﻿@model TestPaper.Models.TestPaperInfo
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<h2>试卷详情</h2>
+
+@*<div>
+    <hr />
+    <dl class="dl-horizontal ">
+        <dt style="font-size:15px " class="col-sm-2 pull-left" >
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+    </dl>
+</div>*@
+@*@using (Ajax.BeginForm("ChildView", "TestPaperInfoes",new { id = Model.Id }, new AjaxOptions { OnSuccess = "success(data)" }))
+    {
+
+                <button class="glyphicon-print" id="Btnprint">打印</button>
+    }*@
+
+
+@{Html.RenderPartial("ChildView");}
+
+<p>
+    @Html.ActionLink("编辑", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("返回试卷列表", "Index")
+</p>
+
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    @*var token=$('@Html.AntiForgeryToken()').val();
+    var headers={};
+    headers["_RequestVerificaionToken"]=token;
+    $(document).ready(function () {
+        PrintTestpaper();
+    })*@
+    //function success(data){
+    //    if(judgePopupBlocked)
+    //    {
+    //        alert("浏览器禁用弹出窗口，请允许");
+    //    }
+    //    var popwindow=window.open();
+    //    if(popwindow){
+    //        $(popwindow.document.body).html(data);
+    //    }else{
+    //        alert("浏览器禁用弹出窗口，请允许");
+    //    }
+    //}   
+    //function judgePopupBlocked(){
+    //    var w=window.open("null","","width=1,height=1")
+    //    try{
+    //        w.close();
+    //        return false;
+    //    }catch (e){
+    //        return true;
+    //    }
+    //}
+
+</script>
+@*<script type="text/javascript">
+    //$(document).ready(function () {
+    //    alert("1");
+    //})
+    $(document).ready(function () {
+        alert("1");
+    })
+    
+</script>*@
+
+

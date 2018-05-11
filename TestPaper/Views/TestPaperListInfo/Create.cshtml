@@ -1,0 +1,91 @@
+﻿@model TestPaper.Models.TestPaperInfo
+
+@{
+    ViewBag.Title = "保存";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<h2>保存</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="form-horizontal col-sm-3">
+            <h4>TestPaperInfo</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2 " })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })                  
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-offset-2 col-md-10">
+                    @Html.DropDownList("TestType", new[] { new SelectListItem() { Text = "选择题" }, new SelectListItem() { Text = "判断题" }, new SelectListItem() { Text = "填空题" }, new SelectListItem() { Text = "解答题" } }, new { @class = "form-control" })
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-9" id="Questions">
+        </div>
+    </div>
+    <div class="container" id="Choice">
+        <h4>选择题</h4>
+        @{ Html.RenderAction("Index", "TestPaperInfoes");}
+    </div>
+    <div class="container" id="Fill">
+        <h4>填空题</h4>
+        @{ Html.RenderAction("Index", "FillQuestions");}
+    </div>
+    <div class="container col-md-offset-2 col-md-10">
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10 ">
+            <input type="submit" value="Create" class="btn btn-default" /><div id="div1" style="display:none">请稍后</div>
+        </div>
+    </div>
+}
+
+
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    $(document).ready(function () {
+        GetQuestionInfo();
+        $("#TestType").change(function () {
+            GetQuestionInfo();
+        })
+    })
+    function GetQuestionInfo() {
+        var testtitle = "";
+        var temp = $("#TestType").val();
+        switch (temp) {
+            case "选择题":
+                $.ajax({
+                    async: true,
+                    type: "Post",
+                    url: "/ChoiceQuestions/GetTestQuestionInfoByType",
+                    LoadingElementId: "div1",
+                    success: function (data) {
+                        $("#Questions").html(data);
+                    }
+
+                })
+                break;
+            case "填空题":
+                $.ajax({
+                    type: "Post",
+                    url: "/FillQuestions/GetTestQuestionInfoByType",
+                    success: function (data) {
+                        $("#Questions").html(data);
+                    }
+
+                })
+                break;
+
+        }
+    }
+ 
+       
+</script>

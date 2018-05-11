@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<h2>Before PartialView</h2>
+<hr/>
+@Html.Partial("PartialPage",1)
+@Html.Action("ChildAction", new { time=DateTime.Now})
+<hr />
+@{ 
+    Html.RenderPartial("PartialPage",2);
+    Html.RenderAction("ChildAction", new { time = DateTime.Now.AddHours(12) });
+}
+<hr />
+<h2>After PartialView</h2>
+<script>
+    setInterval(LoadAction,1000);
+    function LoadAction() {
+        var time = new date();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ChildAction", "PartialView")',
+            data: { time: time.getHours() + ":" + time.getMinutes() + ":" + tim.getSeconds() },
+            datatype: "json",
+            success: function (data) {
+                $('#header').html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(errorThrown);
+            }
+        })
+    }
+</script>
+

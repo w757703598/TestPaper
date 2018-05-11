@@ -1,0 +1,309 @@
+﻿@model TestPaper.Models.TestPaperInfo
+@using TestPaper.Models;
+
+@{
+    ViewBag.Title = "保存";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<h2>添加试题</h2>
+<div id="div1" style="display:block"><p>Loading.....</p></div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="form-horizontal col-sm-3">
+            @*<h4>TestPaperInfo</h4>*@
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label " })
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.Label("试卷类型", htmlAttributes: new { @class = "control-label col-sd-2 " })
+                        @{
+                            var temp = new[] { new SelectListItem() { Text = "" }, new SelectListItem() { Text = "选择题" }, new SelectListItem() { Text = "判断题" }, new SelectListItem() { Text = "填空题" }, new SelectListItem() { Text = "计算题" } };
+                            SelectList sele = new SelectList(temp, "Text", "Text", ViewData["testType"]);
+                        }
+
+                        @Html.DropDownList("TestType", sele, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.Label("学科", htmlAttributes: new { @class = "control-label col-sd-2 " })
+                        @{
+                            var temp1 = new[] { new SelectListItem() { Text = "" },new SelectListItem() { Text = "语文" }, new SelectListItem() { Text = "数学" }, new SelectListItem() { Text = "物理" }, new SelectListItem() { Text = "化学" } };
+                            SelectList sele1 = new SelectList(temp1, "Text", "Text", ViewData["Subject"]);
+                        }
+                        @Html.DropDownList("Subject", sele1, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.Label("章节", htmlAttributes: new { @class = "control-label col-sd-2 " })
+                        @{
+                            var temp3 = new[] { new SelectListItem() { Text = "" }, new SelectListItem() { Text = "第一章" }, new SelectListItem() { Text = "第二章" }, new SelectListItem() { Text = "第三章" } };
+                            SelectList sele3 = new SelectList(temp3, "Text", "Text", ViewData["Section"]);
+                        }
+                        @Html.DropDownList("Section", sele3, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.Label("难易程度", htmlAttributes: new { @class = "control-label col-sd-2 " })
+                        @{
+                            var temp2 = new[] { new SelectListItem() { Text = "" }, new SelectListItem() { Text = "难" }, new SelectListItem() { Text = "中" }, new SelectListItem() { Text = "易" } };
+                            SelectList sele2 = new SelectList(temp2, "Text", "Text", ViewData["diffcult"]);
+                        }
+                        @Html.DropDownList("diffcult", sele2, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-9" id="Questions">
+        </div>
+    </div>
+    @*<div class="form-group">
+        <div class="col-sm-3 ">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>*@
+                         }
+<HR style="BORDER-RIGHT: #00686b 1px dotted; BORDER-TOP: #00686b 1px dotted; BORDER-LEFT: #00686b 1px dotted; BORDER-BOTTOM: #00686b 1px dotted" noShade SIZE=1>
+
+<h3>选择题</h3>
+<table class="table">
+
+    <tr>
+        <th>
+           题目
+        </th>
+        <th>
+            选项
+        </th>
+        <th>
+            答案
+        </th>
+        <th>
+            分数
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.ChoiceQuestions)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Options)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Answer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Score)
+            </td>
+        </tr>
+    }
+
+</table>
+<HR style="BORDER-RIGHT: #00686b 1px dotted; BORDER-TOP: #00686b 1px dotted; BORDER-LEFT: #00686b 1px dotted; BORDER-BOTTOM: #00686b 1px dotted" noShade SIZE=1>
+<h3>填空题</h3>
+<table class="table">
+
+    <tr>
+        <th>
+            题目
+        </th>
+        @*<th>
+            Options
+        </th>*@
+        <th>
+            答案
+        </th>
+        <th>
+            分数
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.FillQuestions)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Options)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Answer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Score)
+            </td>
+        </tr>
+    }
+
+</table>
+<HR style="BORDER-RIGHT: #00686b 1px dotted; BORDER-TOP: #00686b 1px dotted; BORDER-LEFT: #00686b 1px dotted; BORDER-BOTTOM: #00686b 1px dotted" noShade SIZE=1>
+<h3>判断题</h3>
+<table class="table">
+    <tr>
+        <th>
+            题目
+        </th>
+        @*<th>
+            Options
+        </th>*@
+        <th>
+            答案
+        </th>
+        <th>
+            分数
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.CheckQuestions)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Options)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Answer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Score)
+            </td>
+        </tr>
+    }
+
+</table>
+<HR style="BORDER-RIGHT: #00686b 1px dotted; BORDER-TOP: #00686b 1px dotted; BORDER-LEFT: #00686b 1px dotted; BORDER-BOTTOM: #00686b 1px dotted" noShade SIZE=1>
+<h3>计算题</h3>
+<table class="table">
+
+    <tr>
+        <th>
+            题目
+        </th>
+        <th>
+            答案
+        </th>
+        <th>
+            分数
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.CalculateQuestions)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Answer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Score)
+            </td>
+        </tr>
+    }
+
+</table>
+
+    <div class="container col-md-offset-2 col-md-10">
+        @Html.ActionLink("返回试卷列表", "Index")
+    </div>
+
+
+
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#TestType").val("@ViewData["TestType"]");
+        GetQuestionInfo();
+        $("#TestType").change(function () {
+            GetQuestionInfo();
+        })
+        $("#Subject").change(function () {
+            GetQuestionInfo();
+        })
+        $("#Section").change(function () {
+            GetQuestionInfo();
+        })
+        $("#diffcult").change(function () {
+            GetQuestionInfo();
+        })
+    })
+    function GetQuestionInfo() {
+        var testtitle = "";
+        var temp = $("#TestType").val();
+        var subject=$("#Subject").val();
+        var section=$("#Section").val();
+        var diffcult=$("#diffcult").val();
+        switch (temp) {
+            case "选择题":
+                $.ajax({
+                    async: true,
+                    type: "Post",
+                    url: "/ChoiceQuestions/GetTestQuestionInfoByType",
+                    data:{testpaperid:@Model.Id,testtype:temp,subject:subject,section:section,diffcult:diffcult},
+                    success: function (data) {
+                        $("#Questions").html(data);
+                        $("#div1").hide()
+                    }
+
+                })
+                break;
+            case "填空题":
+                $.ajax({
+                    type: "Post",
+                    url: "/FillQuestions/GetTestQuestionInfoByType",
+                    data:{testpaperid:@Model.Id,testtype:temp,subject:subject,section:section,diffcult:diffcult},
+                    LoadingElementId: "div1",
+                    success: function (data) {
+                        $("#Questions").html(data);
+                        $("#div1").show()
+                    }
+                })
+                break;
+            case "判断题":
+                $.ajax({
+                    type: "Post",
+                    url: "/CheckQuestions/GetTestQuestionInfoByType",
+                    data:{testpaperid:@Model.Id,testtype:temp,subject:subject,section:section,diffcult:diffcult},
+                    LoadingElementId: "div1",
+                    success: function (data) {
+                        $("#Questions").html(data);
+                    }
+                })
+                break;
+            case "计算题":
+                $.ajax({
+                    type: "Post",
+                    url: "/CalculateQuestions/GetTestQuestionInfoByType",
+                    data:{testpaperid:@Model.Id,testtype:temp,subject:subject,section:section,diffcult:diffcult},
+                    LoadingElementId: "div1",
+                    success: function (data) {
+                        $("#Questions").html(data);
+                    }
+                })
+                break;
+
+        }
+    }
+
+
+</script>
